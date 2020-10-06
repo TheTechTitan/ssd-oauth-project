@@ -1,10 +1,14 @@
 var express = require('express');
 const axios = require('axios');
+let config = require('../config.json');
 var router = express.Router();
 
 router.post('/getToken', function(req, res){
     console.log("Requesting Token from Dropbox")
-    var reqData = "grant_type=authorization_code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Foauth&client_id=t15yf3j1ns5uc50&client_secret=e3lg1rr5905q2ji&code="+req.body.code;
+    var reqData = "grant_type=authorization_code&redirect_uri="+ config.redirect_uri +
+        "&client_id="+ config.client_id +
+        "&client_secret="+config.client_secret +
+        "&code="+req.body.code;
     getTokenFromDropbox(reqData, function(error, result){
         if(result){
             res.send(result)

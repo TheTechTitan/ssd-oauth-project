@@ -1,0 +1,5 @@
+{
+    "client_id" : "t15yf3j1ns5uc50",
+    "client_secret" : "e3lg1rr5905q2ji",
+    "redirect_uri" : "http://localhost:3000/oauth"
+}
