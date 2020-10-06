@@ -1,0 +1,76 @@
+.landing-center-div{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.landing-center-div.left-align{
+    justify-content: left;
+}
+
+.banner-title{
+    /* color:#2A22AA; */
+    font-size: 50px;
+    font-weight: 700;
+}
+
+.banner-sub{
+    width: 295px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: grey;
+}
+
+.dropbox-button{
+    width: 290px;
+    height: 70px;
+    font-size: 20px;
+    text-align: center;
+    color: var(--dropbox-blue);
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: 40% auto;
+    grid-template-rows: 42% auto;
+    border: 2px solid var(--dropbox-blue);
+    transition: all 0.25s ease-in;
+}
+
+.dropbox-button:hover{
+    background-color: var(--dropbox-blue);
+    color: white;
+}
+
+.dropbox-button:hover #logo{
+    filter: brightness(0) invert(1);
+}
+
+.dropbox-button #logo{
+    grid-column: 1;
+    grid-row: 1 / -1;
+    justify-self: center;
+    align-self: center;
+}
+
+.dropbox-button #sub-text{
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: left;
+    text-align: left;
+    font-size: 14px;
+    align-self: flex-end;
+}
+.dropbox-button #main-text{
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: left;
+    align-self: flex-start;
+    text-align: left;
+    font-size: 30px;
+    line-height: 0.9;
+}
+
+/* .dropbox-button-logo{
+    filter: brightness(0) invert(1);
+    padding-right: 15px;
+} */

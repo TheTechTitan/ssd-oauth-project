@@ -1,0 +1,20 @@
+.upload-center{
+    height: 80vh;
+    padding: 40px 20px;
+}
+
+.drop-zone-area{
+    height: 200px;
+    width: 100%;
+    border: 2px dashed var(--cloudup-blue);
+    text-align: center;
+    padding: 55px;
+    line-height: 2;
+    cursor: pointer;
+}
+
+
+.file-name{
+    color : var(--dropbox-blue);
+    font-weight: bold;
+}

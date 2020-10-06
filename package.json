@@ -1,0 +1,17 @@
+{
+  "name": "ssd-oauth-server",
+  "version": "1.0.0",
+  "scripts": {
+    "client": "cd ssd-oauth-client && npm start",
+    "server": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "concurrently": "^4.0.1"
+  }
+}

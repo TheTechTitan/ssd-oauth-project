@@ -1,0 +1,44 @@
+.nav-header{
+    padding: 20px 50px;
+    height: 10vh;
+    background-color: white;
+    -webkit-box-shadow: 0px -20px 70px -20px rgba(0,0,0,0.6);
+    -moz-box-shadow: 0px -20px 70px -20px rgba(0,0,0,0.6);
+    box-shadow: 0px -20px 70px -20px rgba(0,0,0,0.6);
+}
+
+.logo-title{
+    font-size: 25px;
+    font-weight: 700;
+    font-family: roboto;
+    /* color: #2A22AA; */
+}
+
+.logo-image{
+    padding-right: 13px;
+    padding-bottom: 7px;
+}
+
+.text-sub{
+    color: grey;
+    line-height: 2.2;
+}
+
+.landing-div{
+    padding : 20px 20px 18px
+}
+
+.footer{
+    height: 2vh;
+}
+
+.footer-text{
+    text-align: center;
+    font-size: 12px;
+    color: lightgray;
+    width: 100%;
+}
+
+.text-button:hover{
+    color:var(--cloudup-blue)
+}
