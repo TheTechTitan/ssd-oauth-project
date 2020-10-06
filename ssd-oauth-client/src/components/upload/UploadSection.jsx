@@ -11,7 +11,9 @@ class UploadSection extends Component{
         this.state = {
             files : [],
             folderName : '',
-            success : {alert:false}
+            success : {alert:false},
+            error : {alert:false},
+            loading: false
         }
     }
 
@@ -45,7 +47,7 @@ class UploadSection extends Component{
         return response;
     }
 
-    async uploadFile(token,folderName,file){
+    async uploadFile(token,folderName,file, callback){
         console.log(file)
         const createFolderUrl = "https://content.dropboxapi.com/2/files/upload"
         const response = await fetch(createFolderUrl, {
@@ -57,45 +59,81 @@ class UploadSection extends Component{
             },
             body: file
         }).then(response => response.json)
-        .then(data => {return data})
+        .then(data => {callback(null, data)})
         .catch((error)=>{
-            console.log(error)
+            callback(error, null)
         })
 
-        return response;
     }
 
     createAndUpload = async () => {
         const token = localStorage.getItem('token')
+        this.setState({loading: true})
         var self = this;
-        if(token){
+        if(token && this.state.files.length > 0){
             let tokenJson = JSON.parse(token)
             // console.log(this.state.files)
             // const createFolderResponse = this.createFolder(tokenJson)
-            const uploadFileResponse = this.uploadFile(tokenJson, this.state.folderName, this.state.files[0])
+            this.uploadFile(tokenJson, this.state.folderName, this.state.files[0], function(error, success){
+                if(success){
+                    self.setState(
+                        {
+                            success : {alert: true, fileName : self.state.files[0].name, folderName : self.state.folderName},
+                            files : [],
+                            folderName : "",
+                            loading: false
+                        })
+        
+                    setTimeout(function () {
+                        self.setState({success : {alert:false}})
+                    }, 5000);
 
-            this.setState(
+                } else {
+                    self.setState(
+                        {
+                            error : {alert: true, message: "Error while trying to Upload "+ self.state.files[0].name + " to " + self.state.folderName},
+                            files : [],
+                            folderName : "",
+                            loading: false
+                        })
+        
+                    setTimeout(function () {
+                        self.setState({error : {alert:false}})
+                    }, 5000);
+                }
+            })
+            // console.log(createFolderResponse)
+        } else {
+            let errorMessage = ""
+            if(!token){
+                errorMessage = "Invalid access token. Please logout and login again"
+            } else {
+                errorMessage = "No files detected for upload."
+            }
+            self.setState(
                 {
-                    success : {alert: true, fileName : this.state.files[0].name, folderName : this.state.folderName},
-                    files : [],
-                    folderName : ""
+                    error : {alert: true, message: errorMessage},
+                    loading: false
                 })
 
             setTimeout(function () {
-                self.setState({success : {alert:false}})
+                self.setState({error : {alert:false}})
             }, 5000);
-            // console.log(createFolderResponse)
         }
     }
 
     render(){
-        const {files, folderName, success} = this.state;
+        const {files, folderName, success, error, loading} = this.state;
         return(
             <div className="container upload-center">
                 <h3 style={{paddingBottom: "50px"}}><span style={{color:"#0061ff"}}>Dropbox</span> Upload Center</h3>
                 {success.alert ? 
                 <div class="alert alert-success" role="alert">
                     Successfully Uploaded {success.fileName} to {success.folderName}.
+                </div>
+                : error.alert ? 
+                <div class="alert alert-danger" role="alert">
+                    {error.message}
                 </div>
                 : <Fragment/>
                 }
@@ -131,7 +169,10 @@ class UploadSection extends Component{
                     </div>
                 </div>
                 <div style={{marginTop:"100px"}}>
-                    <button disabled={!folderName} type="button" className="btn btn-lg btn-primary" onClick={this.createAndUpload}>Create &amp; Upload</button>
+                    <button disabled={!folderName || loading} type="button" className="btn btn-lg btn-primary" onClick={this.createAndUpload}>
+                        {loading? <span style={{padding: "7px"}} class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : <Fragment/>}
+                        <span style={{paddingLeft: "10px"}}>Create &amp; Upload</span>
+                    </button>
                 </div>
             </div>
         )
